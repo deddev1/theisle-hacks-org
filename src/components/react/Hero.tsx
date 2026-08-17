@@ -7,7 +7,6 @@ type Props = {
 	checkoutUrl: string;
 	gameUrl: string;
 	gameName: string;
-	wikiGuideUrl: string;
 	monthlyPrice: number;
 	heroSrc: string;
 	heroSrcSet: string;
@@ -74,7 +73,6 @@ function HeroInner({
 	checkoutUrl,
 	gameUrl,
 	gameName,
-	wikiGuideUrl,
 	monthlyPrice,
 	heroSrc,
 	heroSrcSet,
@@ -138,14 +136,6 @@ function HeroInner({
 								{ctaBuy}
 							</span>
 							<span className="hero__buy-price">{priceLabel}</span>
-						</a>
-						<a
-							className="hero__guide"
-							href={wikiGuideUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							The Isle Wiki
 						</a>
 					</div>
 					<ul className="hero__features">

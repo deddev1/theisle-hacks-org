@@ -6,6 +6,7 @@ import HomeReviews from '../components/HomeReviews.astro';
 import HomeSeo from '../components/HomeSeo.astro';
 import HomeAboutApp from '../components/react/HomeAbout';
 import ExternalResources from '../components/ExternalResources.astro';
+import { externalUrls } from '../data/external-resources';
 import SiteFooter from '../components/SiteFooter.astro';
 import { getLocaleContent, getPageContent } from '../data/i18n';
 import { getLocalizedPath } from '../data/i18n/routing';
@@ -116,7 +117,7 @@ const extraGraph: Record<string, unknown>[] = [
 						<HomeAboutApp client:visible locale={locale} />
 						<HomeSeo locale={locale} />
 						<div class="shell">
-							<ExternalResources locale={locale} />
+							<ExternalResources locale={locale} omitHrefs={[externalUrls.wiki]} />
 						</div>
 					</>
 				) : (
