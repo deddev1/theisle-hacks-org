@@ -130,6 +130,9 @@ function pageTitle(headline: string): string {
 					{ui.published} {post.published} · {ui.updated} {post.updated}
 				</p>
 			</header>
+
+			<RelatedPages locale={locale} variant="topics" links={topicLinks} class="post__topics post__topics--top" />
+
 			<img
 				class="post__hero"
 				src={post.imageSrc}
@@ -176,7 +179,6 @@ function pageTitle(headline: string): string {
 			)
 		}
 
-		<RelatedPages locale={locale} variant="topics" links={topicLinks} class="post__topics" />
 			</div>
 		</div>
 	</main>
@@ -298,6 +300,10 @@ function pageTitle(headline: string): string {
 	}
 
 	.post__topics {
-		margin-top: 2rem;
+		margin: 1.25rem 0 1.75rem;
+	}
+
+	.post__topics--top {
+		margin-top: 0.5rem;
 	}
 </style>

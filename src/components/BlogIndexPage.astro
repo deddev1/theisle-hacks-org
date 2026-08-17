@@ -78,6 +78,8 @@ const articleListSchema = {
 			<p class="blog__intro">{ui.blogIntro}</p>
 		</header>
 
+		<CategoryRow locale={locale} />
+
 		{
 			featured.length > 0 && (
 				<section class="blog__featured" aria-label={t('common.featured')}>
@@ -134,7 +136,6 @@ const articleListSchema = {
 		<RelatedPages locale={locale} variant="topics" links={blogIndexTopicLinks} class="blog__topics" />
 		</div>
 	</main>
-	<CategoryRow locale={locale} />
 	<SiteFooter locale={locale} />
 </Layout>
 

@@ -691,7 +691,7 @@ export function localizeInternalHref(href: string, locale: LocaleCode): string {
 	const trimmed = href.replace(/\/+$/, '') || '/';
 	const withSlash = trimmed === '/' ? '/' : `${trimmed}/`;
 	if (withSlash === '/isle-hacks/' || withSlash === '/the-isle-hacks/') {
-		return getLocalizedPath('home', locale);
+		return getLocalizedPath('hacks', locale);
 	}
 	for (const pageId of pageIds) {
 		const english = englishPaths[pageId];
