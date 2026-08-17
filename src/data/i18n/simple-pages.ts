@@ -83,6 +83,8 @@ export const simplePageCopy: Partial<Record<PageId, SimplePageCopy>> = {
 					'<a href="/setup/">Setup guide</a>',
 					'<a href="/updates/">Live status</a>',
 					'<a href="/blog/">Isle Intel blog</a>',
+					'<a href="https://store.steampowered.com/app/376210/news/" target="_blank" rel="noopener noreferrer">Official Steam patch notes</a>',
+					'<a href="https://isle.fandom.com/wiki/The_Isle" target="_blank" rel="noopener noreferrer">The Isle Wiki (Fandom)</a>',
 				],
 			},
 			{
@@ -90,6 +92,7 @@ export const simplePageCopy: Partial<Record<PageId, SimplePageCopy>> = {
 				paragraphs: [
 					'We rebuild after big {game} or {antiCheat} patches.',
 					'Check Status before you play after a patch day.',
+					'Verify official changes on <a href="https://store.steampowered.com/app/376210/news/" target="_blank" rel="noopener noreferrer">Steam patch notes</a> and the <a href="https://isle.fandom.com/wiki/The_Isle" target="_blank" rel="noopener noreferrer">Isle Wiki</a> before you tune overlays.',
 				],
 				list: ['Status on the Status page', 'Setup guide included', 'Email support with your order ID'],
 			},

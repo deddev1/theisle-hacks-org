@@ -20,6 +20,7 @@ import { getT } from '../i18n/server';
 import RelatedPages from '../components/RelatedPages.astro';
 import CategoryRow from '../components/CategoryRow.astro';
 import ExternalResources from '../components/ExternalResources.astro';
+import ExternalGuidePills from '../components/ExternalGuidePills.astro';
 
 type GalleryInput = string | { src: string; alt: string };
 
@@ -167,6 +168,7 @@ const useHomeHero =
 					<p class="banner__eyebrow">{resolvedEyebrow}</p>
 					<h1 class="banner__title">{heading}</h1>
 					<p class="banner__intro" data-edit={introEdit || undefined}>{intro}</p>
+					{showExternalResources && <ExternalGuidePills locale={locale} class="banner__guides" />}
 					{
 						(ctaPrimary || ctaSecondary) && (
 							<div class="banner__actions">
@@ -183,6 +185,7 @@ const useHomeHero =
 									<a
 										class="btn btn--ghost"
 										href={ctaSecondary.href}
+										target={ctaSecondary.href.startsWith('http') ? '_blank' : undefined}
 										rel={ctaSecondary.href.startsWith('http') ? 'noopener noreferrer' : undefined}
 									>
 										{ctaSecondary.label}
@@ -331,6 +334,10 @@ const useHomeHero =
 		color: var(--ink-muted);
 		font-size: 0.975rem;
 		line-height: 1.55;
+	}
+
+	.banner__guides {
+		margin-top: 1rem;
 	}
 
 	.banner__actions {

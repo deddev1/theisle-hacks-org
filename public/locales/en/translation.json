@@ -196,7 +196,9 @@
   },
   "externalResources": {
     "title": "Official game guides & resources",
-    "lede": "We link to trusted third-party sources so you can verify patch notes, dinosaur stats, and map info outside our site."
+    "lede": "We link to trusted third-party sources so you can verify patch notes, dinosaur stats, and map info outside our site.",
+    "pillsTitle": "Official guides",
+    "pillsLabel": "Official The Isle guides"
   },
   "images": {
     "hero": "The Isle Hacks hero — ESP and aimbot overlay in The Isle",

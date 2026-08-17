@@ -4,6 +4,7 @@ import type { LocaleCode } from '../data/i18n/locales';
 import { defaultLocale } from '../data/i18n/locales';
 import { brand } from '../data/brand';
 import { productInfo, siteConfig } from '../data/site';
+import { externalUrls } from '../data/external-resources';
 import { heroWidth, heroHeight, heroSrcSet, heroSizes, heroSrc } from '../lib/responsive-images';
 
 interface Props {
@@ -21,6 +22,7 @@ const monthly = productInfo.plans.find((p) => p.id === 'monthly') ?? productInfo
 	checkoutUrl={siteConfig.checkoutUrl}
 	gameUrl={siteConfig.gameUrl}
 	gameName={brand.game}
+	wikiGuideUrl={externalUrls.wiki}
 	monthlyPrice={monthly.price}
 	heroSrc={heroSrc}
 	heroSrcSet={heroSrcSet}
@@ -219,6 +221,32 @@ const monthly = productInfo.plans.find((p) => p.id === 'monthly') ?? productInfo
 
 	.hero__buy:active {
 		transform: translateY(0);
+	}
+
+	.hero__guide {
+		pointer-events: auto;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 3rem;
+		padding: 0.65rem 1.1rem;
+		border: 1px solid color-mix(in srgb, #fff 22%, transparent);
+		border-radius: 999px;
+		background: color-mix(in srgb, #09090b 55%, transparent);
+		color: #fff;
+		font-size: 0.875rem;
+		font-weight: 600;
+		backdrop-filter: blur(8px);
+		transition:
+			border-color 0.18s ease,
+			background 0.18s ease,
+			color 0.18s ease;
+	}
+
+	.hero__guide:hover {
+		border-color: color-mix(in srgb, var(--magenta-soft) 55%, #fff);
+		color: var(--magenta-soft);
+		background: color-mix(in srgb, #09090b 72%, transparent);
 	}
 
 	.hero__features {

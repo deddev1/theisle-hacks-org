@@ -9,6 +9,7 @@ import { isleImages } from '../data/isle';
 import { simplePageCopy } from '../data/i18n/simple-pages';
 import { getT } from '../i18n/server';
 import { getPageCrawlImage } from '../data/page-images';
+import { getExternalSecondaryCta } from '../data/external-resources';
 
 interface Props {
 	locale: LocaleCode;
@@ -78,6 +79,10 @@ const ctaSecondaryHref = ctaSecondaryPath
 		? siteConfig.checkoutUrl
 		: getLocalizedPath('features', locale);
 
+const externalSecondary = locale === 'en' ? getExternalSecondaryCta(pageId) : undefined;
+const resolvedSecondaryLabel = externalSecondary?.label ?? ctaSecondaryLabel;
+const resolvedSecondaryHref = externalSecondary?.href ?? ctaSecondaryHref;
+
 const monthly = productInfo.plans.find((p) => p.id === 'monthly') ?? productInfo.plans[0];
 const lifetime = productInfo.plans.find((p) => p.id === 'lifetime') ?? productInfo.plans[1];
 const showStorePlans = pageId === 'pricing' && locale === 'en';
@@ -113,8 +118,8 @@ const eyebrowByPage: Partial<Record<PageId, string>> = {
 	showExternalResources={!['privacy', 'refund', 'terms'].includes(pageId)}
 	ctaPrimary={{ href: siteConfig.checkoutUrl, label: ctaPrimaryLabel, edit: 'ctaBuy' }}
 	ctaSecondary={
-		ctaSecondaryLabel
-			? { href: ctaSecondaryHref, label: ctaSecondaryLabel }
+		resolvedSecondaryLabel
+			? { href: resolvedSecondaryHref, label: resolvedSecondaryLabel }
 			: undefined
 	}
 >
