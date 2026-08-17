@@ -8,6 +8,7 @@ import { getReviewPath, getReviewCrawlImage, reviewsBasePath } from '../../../da
 import type { CustomerReview } from '../../../data/site';
 import { contentSrcSet, productMainSizes } from '../../../lib/responsive-images';
 import RelatedPages from '../../../components/RelatedPages.astro';
+import ExternalResources from '../../../components/ExternalResources.astro';
 
 export function getStaticPaths() {
 	return customerReviews.map((review) => ({
@@ -155,6 +156,7 @@ const extraGraph: Record<string, unknown>[] = [
 			</section>
 
 			<RelatedPages locale="en" variant="topics" class="review-detail__topics" />
+			<ExternalResources locale="en" class="review-detail__external" />
 			</div>
 		</div>
 	</main>
