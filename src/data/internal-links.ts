@@ -25,6 +25,11 @@ const TOPIC_LINKS = {
 	blog: { kind: 'path' as const, path: '/blog/', label: L('{game} Intel blog') },
 	reviews: { kind: 'path' as const, path: '/reviews/', label: L('{brand} buyer reviews') },
 	hacks: { kind: 'page' as const, pageId: 'hacks' as const, label: L('{primaryKeyword} pillar') },
+	undetected: {
+		kind: 'page' as const,
+		pageId: 'undetected' as const,
+		label: L('Undetected {game} hacks'),
+	},
 } satisfies Record<string, InternalLinkTarget>;
 
 /** Per-page related internal links (exclude self where noted in component). */
@@ -140,6 +145,7 @@ export const relatedLinksByPageId: Partial<Record<PageId, InternalLinkTarget[]>>
 /** Product-topic links for blog posts, FAQ answers, and reviews. */
 export const productTopicLinks: InternalLinkTarget[] = [
 	TOPIC_LINKS.overview,
+	TOPIC_LINKS.hacks,
 	TOPIC_LINKS.esp,
 	TOPIC_LINKS.aimbot,
 	TOPIC_LINKS.radar,
@@ -148,6 +154,122 @@ export const productTopicLinks: InternalLinkTarget[] = [
 	TOPIC_LINKS.setup,
 	TOPIC_LINKS.status,
 ];
+
+/** Pillar links for the public blog index. */
+export const blogIndexTopicLinks: InternalLinkTarget[] = [
+	TOPIC_LINKS.hacks,
+	TOPIC_LINKS.esp,
+	TOPIC_LINKS.aimbot,
+	TOPIC_LINKS.radar,
+	TOPIC_LINKS.features,
+	TOPIC_LINKS.pricing,
+	TOPIC_LINKS.setup,
+	TOPIC_LINKS.status,
+	TOPIC_LINKS.reviews,
+];
+
+/** Topic-relevant product links keyed by blog post category. */
+const blogCategoryLinks: Record<string, InternalLinkTarget[]> = {
+	Aimbot: [
+		TOPIC_LINKS.aimbot,
+		TOPIC_LINKS.esp,
+		TOPIC_LINKS.radar,
+		TOPIC_LINKS.features,
+		TOPIC_LINKS.setup,
+		TOPIC_LINKS.pricing,
+		TOPIC_LINKS.status,
+	],
+	ESP: [
+		TOPIC_LINKS.esp,
+		TOPIC_LINKS.radar,
+		TOPIC_LINKS.aimbot,
+		TOPIC_LINKS.features,
+		TOPIC_LINKS.setup,
+		TOPIC_LINKS.pricing,
+	],
+	Undetected: [
+		TOPIC_LINKS.undetected,
+		TOPIC_LINKS.hacks,
+		TOPIC_LINKS.status,
+		TOPIC_LINKS.setup,
+		TOPIC_LINKS.faq,
+		TOPIC_LINKS.status,
+	],
+	Comparisons: [
+		TOPIC_LINKS.hacks,
+		TOPIC_LINKS.esp,
+		TOPIC_LINKS.aimbot,
+		TOPIC_LINKS.features,
+		TOPIC_LINKS.pricing,
+		TOPIC_LINKS.reviews,
+	],
+	'Cheats Guide': [
+		TOPIC_LINKS.hacks,
+		TOPIC_LINKS.features,
+		TOPIC_LINKS.pricing,
+		TOPIC_LINKS.setup,
+		TOPIC_LINKS.faq,
+		TOPIC_LINKS.status,
+	],
+	'Buyers Guide': [
+		TOPIC_LINKS.pricing,
+		TOPIC_LINKS.reviews,
+		TOPIC_LINKS.hacks,
+		TOPIC_LINKS.features,
+		TOPIC_LINKS.setup,
+		TOPIC_LINKS.faq,
+	],
+	'Product Updates': [
+		TOPIC_LINKS.status,
+		TOPIC_LINKS.features,
+		TOPIC_LINKS.setup,
+		TOPIC_LINKS.hacks,
+		TOPIC_LINKS.faq,
+	],
+	'Patch Notes': [
+		TOPIC_LINKS.status,
+		TOPIC_LINKS.hacks,
+		TOPIC_LINKS.setup,
+		TOPIC_LINKS.features,
+		TOPIC_LINKS.faq,
+	],
+	Competitive: [
+		TOPIC_LINKS.esp,
+		TOPIC_LINKS.aimbot,
+		TOPIC_LINKS.radar,
+		TOPIC_LINKS.features,
+		TOPIC_LINKS.hacks,
+		TOPIC_LINKS.pricing,
+	],
+};
+
+const gameplayIntelCategories = new Set([
+	'Cosmetics',
+	'Weapons',
+	'Growth Runs',
+	'Loot Routes',
+	'Settings',
+	'Warmup',
+]);
+
+const gameplayIntelLinks: InternalLinkTarget[] = [
+	TOPIC_LINKS.hacks,
+	TOPIC_LINKS.esp,
+	TOPIC_LINKS.aimbot,
+	TOPIC_LINKS.features,
+	TOPIC_LINKS.status,
+	TOPIC_LINKS.pricing,
+];
+
+export function getTopicLinksForBlogCategory(category: string): InternalLinkTarget[] {
+	if (blogCategoryLinks[category]) {
+		return blogCategoryLinks[category];
+	}
+	if (gameplayIntelCategories.has(category)) {
+		return gameplayIntelLinks;
+	}
+	return productTopicLinks;
+}
 
 const DEFAULT_LINKS = relatedLinksByPageId.home ?? [];
 

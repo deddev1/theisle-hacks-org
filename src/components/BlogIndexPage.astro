@@ -14,6 +14,9 @@ import { blogLabel, siteConfig } from '../data/site';
 import { brandSeo, seoPageTitle } from '../data/site-core';
 import { seoDescription } from '../data/brand';
 import { getLocalizedPath } from '../data/i18n/routing';
+import { blogIndexTopicLinks } from '../data/internal-links';
+import RelatedPages from './RelatedPages.astro';
+import CategoryRow from './CategoryRow.astro';
 import { getT } from '../i18n/server';
 
 interface Props {
@@ -126,8 +129,11 @@ const articleListSchema = {
 				))
 			}
 		</section>
+
+		<RelatedPages locale={locale} variant="topics" links={blogIndexTopicLinks} class="blog__topics" />
 		</div>
 	</main>
+	<CategoryRow locale={locale} />
 	<SiteFooter locale={locale} />
 </Layout>
 
@@ -234,6 +240,10 @@ const articleListSchema = {
 		color: rgba(255, 255, 255, 0.55);
 		font-size: 0.8rem;
 		font-weight: 600;
+	}
+
+	.blog__topics {
+		margin-top: 2.5rem;
 	}
 	.blog__more {
 		color: var(--magenta-soft);

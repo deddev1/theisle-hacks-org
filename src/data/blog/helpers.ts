@@ -116,6 +116,14 @@ export function getFeaturedPosts(locale: LocaleCode, limit = 3): ResolvedBlogPos
 	return (featured.length >= limit ? featured : all).slice(0, limit);
 }
 
+/** Related posts for a blog article — same category first, then newest others. */
+export function getRelatedPostsByCategory(post: ResolvedBlogPost, limit = 3): ResolvedBlogPost[] {
+	const all = getAllPostsForLocale(post.locale).filter((item) => item.id !== post.id);
+	const sameCategory = all.filter((item) => item.category === post.category);
+	const otherCategories = all.filter((item) => item.category !== post.category);
+	return [...sameCategory, ...otherCategories].slice(0, limit);
+}
+
 export function getPostBySlug(locale: LocaleCode, slug: string): ResolvedBlogPost | undefined {
 	const post = blogPosts.find((p) => p.translations[locale]?.slug === slug);
 	return post ? resolvePost(post, locale) : undefined;
