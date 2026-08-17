@@ -5,14 +5,16 @@ import SiteFooter from './SiteFooter.astro';
 import { blogUi, defaultLocale, type LocaleCode } from '../data/i18n/locales';
 import {
 	absoluteBlogUrl,
-	getAllPostsForLocale,
 	getBlogBasePath,
 	getBlogPostHreflangAlternates,
+	getRelatedPostsByCategory,
 } from '../data/blog/helpers';
 import type { ResolvedBlogPost } from '../data/blog/types';
 import { blogLabel, siteConfig } from '../data/site';
 import { getLocalizedPath, localizeInternalHref } from '../data/i18n/routing';
+import { getTopicLinksForBlogCategory } from '../data/internal-links';
 import RelatedPages from './RelatedPages.astro';
+import { getT } from '../i18n/server';
 
 interface Props {
 	locale: LocaleCode;
@@ -21,12 +23,12 @@ interface Props {
 
 const { locale, post } = Astro.props;
 const ui = blogUi[locale];
+const tServer = getT(locale);
 const t = post.translation;
 const homeHref = getLocalizedPath('home', locale);
 const blogHref = getBlogBasePath(defaultLocale);
-const related = getAllPostsForLocale(defaultLocale)
-	.filter((p) => p.id !== post.id)
-	.slice(0, 3);
+const related = getRelatedPostsByCategory(post, 3);
+const topicLinks = getTopicLinksForBlogCategory(post.category);
 
 const articleUrl = absoluteBlogUrl(defaultLocale, post.translations[defaultLocale]?.slug ?? t.slug);
 const hreflangAlternates = getBlogPostHreflangAlternates(post, locale);
@@ -95,6 +97,13 @@ function pageTitle(headline: string): string {
 			<div class="shell-content post__inner">
 		<article>
 			<header class="post__header">
+				<nav class="post__crumbs" aria-label={tServer('common.breadcrumb')}>
+					<a href={homeHref}>{ui.home}</a>
+					<span aria-hidden="true">/</span>
+					<a href={blogHref}>{ui.blogH1}</a>
+					<span aria-hidden="true">/</span>
+					<span aria-current="page">{t.h1}</span>
+				</nav>
 				<p class="post__cat">{post.category}</p>
 				<h1>{t.h1}</h1>
 				<p class="post__intro">{t.intro}</p>
@@ -148,7 +157,7 @@ function pageTitle(headline: string): string {
 			)
 		}
 
-		<RelatedPages locale={locale} variant="topics" class="post__topics" />
+		<RelatedPages locale={locale} variant="topics" links={topicLinks} class="post__topics" />
 			</div>
 		</div>
 	</main>
@@ -164,6 +173,30 @@ function pageTitle(headline: string): string {
 		display: grid;
 		gap: 0;
 	}
+	.post__crumbs {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.35rem;
+		margin: 0 0 0.85rem;
+		font-size: 0.85rem;
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+	.post__crumbs a {
+		color: rgba(255, 255, 255, 0.65);
+		text-decoration: none;
+	}
+
+	.post__crumbs a:hover {
+		color: var(--magenta-soft);
+	}
+
+	.post__crumbs [aria-current='page'] {
+		color: rgba(255, 255, 255, 0.92);
+		font-weight: 500;
+	}
+
 	.post__cat {
 		margin: 0 0 0.5rem;
 		color: var(--magenta-soft);
