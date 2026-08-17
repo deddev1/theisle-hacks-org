@@ -30,18 +30,36 @@ const blogHref = getBlogBasePath(defaultLocale);
 const related = getRelatedPostsByCategory(post, 3);
 const topicLinks = getTopicLinksForBlogCategory(post.category);
 
+function stripHtml(html: string): string {
+	return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function countWords(...parts: string[]): number {
+	return parts.join(' ').split(/\s+/).filter(Boolean).length;
+}
+
+const articleBodyText = [
+	t.intro,
+	...t.sections.flatMap((section) => [section.h2, ...section.paragraphs.map(stripHtml)]),
+].join(' ');
+const wordCount = countWords(articleBodyText);
+const metaKeywords = t.keywords.slice(0, 4);
+
 const articleUrl = absoluteBlogUrl(defaultLocale, post.translations[defaultLocale]?.slug ?? t.slug);
 const hreflangAlternates = getBlogPostHreflangAlternates(post, locale);
 const articleSchema = {
-	'@type': 'Article',
+	'@type': 'BlogPosting',
 	'@id': `${articleUrl}#article`,
 	url: articleUrl,
-	headline: t.title,
+	headline: t.h1,
+	alternativeHeadline: t.title,
 	description: t.metaDescription,
 	datePublished: post.published,
 	dateModified: post.updated,
 	image: new URL(post.imageSrc, siteConfig.url).href,
 	inLanguage: locale,
+	wordCount,
+	isAccessibleForFree: true,
 	author: { '@type': 'Organization', name: siteConfig.name, url: siteConfig.url },
 	publisher: {
 		'@type': 'Organization',
@@ -53,8 +71,8 @@ const articleSchema = {
 		'@type': 'WebPage',
 		'@id': `${articleUrl}#webpage`,
 	},
-	isPartOf: { '@id': `${siteConfig.url}/#website` },
-	keywords: t.keywords.join(', '),
+	isPartOf: { '@id': `${absoluteBlogUrl(defaultLocale)}#collection` },
+	keywords: metaKeywords.join(', '),
 	articleSection: post.category,
 };
 
@@ -80,6 +98,7 @@ function pageTitle(headline: string): string {
 	description={t.metaDescription}
 	canonicalPath={post.canonicalPath}
 	hreflangAlternates={hreflangAlternates}
+	keywords={metaKeywords}
 	ogImage={post.imageSrc}
 	ogImageAlt={t.imageAlt}
 	type="article"

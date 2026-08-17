@@ -832,6 +832,261 @@ const sources = [
 	},
 ];
 
+/** Trim keywords to 3–4 short, unique phrases for meta and schema. */
+function normalizeKeywords(keywords) {
+	const seen = new Set();
+	return keywords
+		.map((k) => k.trim())
+		.filter((k) => {
+			const lower = k.toLowerCase();
+			if (!k || lower === 'isle intel' || seen.has(lower)) return false;
+			seen.add(lower);
+			return true;
+		})
+		.slice(0, 4);
+}
+
+/** Cleaner on-page H1 titles and shorter keyword sets per post. */
+const POST_META = {
+	'patch-notes-breakdown': {
+		h1: 'How to Read The Isle Patch Notes',
+		keywords: ['the isle patch notes', 'isle updates', 'eac patch'],
+	},
+	'isle-skin-leaks': {
+		h1: 'The Isle Cosmetics Buying Guide',
+		keywords: ['isle skins', 'isle cosmetics', 'the isle store'],
+	},
+	'isle-dinosaur-tier-list': {
+		h1: 'The Isle Dinosaur Tier List for 2026',
+		keywords: ['isle tier list', 'best isle dinosaurs', 'isle meta'],
+	},
+	'isle-growth-run-meta': {
+		h1: 'The Isle Growth Run Strategies',
+		keywords: ['isle growth run', 'the isle juvenile', 'isle nests'],
+	},
+	'isle-competitive-meta': {
+		h1: 'Competitive The Isle Meta Guide',
+		keywords: ['isle competitive', 'isle meta', 'official servers'],
+	},
+	'isle-loot-routes': {
+		h1: 'The Isle Loot Routes Guide',
+		keywords: ['isle loot routes', 'isle spawn guide', 'isle esp'],
+	},
+	'isle-pro-settings': {
+		h1: 'The Isle Pro Settings Guide',
+		keywords: ['isle settings', 'isle visibility', 'isle audio'],
+	},
+	'isle-warmup-maps': {
+		h1: 'The Isle Warmup Routine',
+		keywords: ['isle warmup', 'isle aim practice', 'survival routine'],
+	},
+	'the-isle-hacks-complete-guide': {
+		h1: 'The Isle Hacks Guide for 2026',
+		keywords: ['the isle hacks', 'undetected hacks', 'isle esp'],
+	},
+	'the-isle-hacks-buyers-guide': {
+		h1: 'The Isle Hacks Buyers Guide',
+		keywords: ['buy isle hacks', 'isle cheats guide', 'isle pricing'],
+	},
+	'isle-hacks-2026-whats-new': {
+		h1: 'The Isle Hacks Updates in 2026',
+		keywords: ['isle hacks 2026', 'eac updates', 'hack status'],
+	},
+	'isle-aimbot-settings-guide': {
+		h1: 'The Isle Aimbot Settings Guide',
+		keywords: ['isle aimbot', 'soft aim', 'aimbot fov'],
+	},
+	'isle-esp-wallhack-explained': {
+		h1: 'The Isle ESP and Wallhack Guide',
+		keywords: ['isle esp', 'isle wallhack', 'the isle hacks'],
+	},
+	'undetected-isle-hacks-eac': {
+		h1: 'Undetected The Isle Hacks Explained',
+		keywords: ['undetected isle hacks', 'eac isle', 'ban risk'],
+	},
+	'the-isle-hacks-vs-cheatvault': {
+		h1: 'The Isle Hacks vs Budget Shops',
+		keywords: ['isle hacks comparison', 'budget isle hacks', 'esp radar'],
+	},
+	'elitefn-two-week-test': {
+		h1: 'Two-Week Isle Hack Comparison Test',
+		keywords: ['isle hacks review', 'hack comparison', 'soft aim test'],
+	},
+	'the-isle-hacks-vs-ghostware': {
+		h1: 'Full-Stack vs ESP-Only Isle Hacks',
+		keywords: ['isle esp cheat', 'full stack hacks', 'radar vs esp'],
+	},
+};
+
+/** Extra closing sections — longer, topic-relevant copy with internal links. */
+const EXTRA_SECTIONS = {
+	'patch-notes-breakdown': [
+		{
+			h2: 'Staying ahead after every The Isle update',
+			paragraphs: [
+				'Patch days are when most players lose progress — not because the game broke, but because they never updated their habits. After you read the notes, spend ten minutes on our <a href="/updates/">status page</a> if you use overlays, then adjust your main species and nest plan before you queue.',
+				'If you rely on information tools, confirm the stack on <a href="/the-isle-hacks/">The Isle Hacks</a> still matches the current client. Pair patch reading with the <a href="/faq/">FAQ</a> when something in the notes is unclear — guessing costs more time than one careful read.',
+			],
+		},
+	],
+	'isle-skin-leaks': [
+		{
+			h2: 'Cosmetics vs survival tools — keep the budget split clear',
+			paragraphs: [
+				'Skins are fun, but they do not replace map reads, nest timing, or a stable kit. If you play for information advantage, budget for <a href="/isle-esp/">ESP</a> and <a href="/features/">features</a> before you chase another cosmetic drop.',
+				'When a patch cycle shifts visibility or lighting, revisit your settings in our <a href="/blog/isle-pro-settings-guide/">pro settings guide</a> before you blame a skin for a lost fight.',
+			],
+		},
+	],
+	'isle-dinosaur-tier-list': [
+		{
+			h2: 'Turn tier knowledge into session wins',
+			paragraphs: [
+				'A tier list only helps when you spawn with the right plan. Match your pick to your map, nest route, and whether you solo or trio. Competitive players often pair species choice with <a href="/isle-radar-hack/">radar</a> reads so flanks do not erase a good spawn.',
+				'If you want the full cheat-side stack that supports aggressive picks, start at <a href="/the-isle-hacks/">The Isle Hacks</a> and compare plans on <a href="/pricing/">Pricing</a> before you commit to a main species for the wipe.',
+			],
+		},
+	],
+	'isle-growth-run-meta': [
+		{
+			h2: 'Growth runs and information tools work together',
+			paragraphs: [
+				'Juvenile timing is about seconds. Seeing a fight early — through sound, map knowledge, or <a href="/isle-esp/">ESP</a> — lets you third-party with a plan instead of sprinting into a crossfire.',
+				'After a strong growth run, protect the kit with conservative settings from our <a href="/isle-aimbot/">aimbot guide</a> and check <a href="/updates/">Updates</a> before long sessions on patch weeks.',
+			],
+		},
+	],
+	'isle-competitive-meta': [
+		{
+			h2: 'Competitive habits that pair with The Isle Hacks tools',
+			paragraphs: [
+				'High-level players win on information timing: who rotates first, who holds nest, who peeks with armor. That is the same loop <a href="/features/">ESP, radar, and soft aim</a> support when tuned conservatively.',
+				'If you study competitive meta, also read <a href="/the-isle-hacks/">The Isle Hacks</a> and <a href="/setup/">Setup</a> so your overlay stack stays readable instead of noisy during real fights.',
+			],
+		},
+	],
+	'isle-loot-routes': [
+		{
+			h2: 'Route discipline plus carcass awareness',
+			paragraphs: [
+				'Routes fail when players carcass like tourists. Mark your ninety-second plan, stick to cover ladders, and use <a href="/isle-esp/">carcass ESP filters</a> only to confirm what your route already predicted — not to replace map knowledge.',
+				'Strong routes feed into growth runs and competitive spawns. Link this guide with <a href="/the-isle-hacks/">The Isle Hacks</a> if you want radar for nest zones after your kit is online.',
+			],
+		},
+	],
+	'isle-pro-settings': [
+		{
+			h2: 'Settings that support ESP and aim tools',
+			paragraphs: [
+				'Stable FPS and clean silhouettes make every tool better. Before you tune <a href="/isle-aimbot/">soft aim</a>, fix sensitivity and visibility here so assists feel natural instead of robotic.',
+				'Audio and shadow clarity also reduce how much you need to toggle <a href="/isle-esp/">ESP categories</a> mid-fight. Revisit settings after major patches on <a href="/updates/">Updates</a>.',
+			],
+		},
+	],
+	'isle-warmup-maps': [
+		{
+			h2: 'Warm up before you trust expensive kits',
+			paragraphs: [
+				'Warmup protects grown dinosaurs and paid licenses alike. Run the routine, then confirm <a href="/updates/">status</a> if you use overlays after a patch.',
+				'Pair warmup with <a href="/isle-aimbot/">aim profiles</a> and <a href="/isle-esp/">ESP toggles</a> you already plan to use in-session — not new settings you have never tested under pressure.',
+			],
+		},
+	],
+	'the-isle-hacks-complete-guide': [
+		{
+			h2: 'Your next steps after reading this guide',
+			paragraphs: [
+				'If the stack fits your play style, compare monthly and lifetime on <a href="/pricing/">Pricing</a>, then follow <a href="/setup/">Setup</a> line by line. Keep <a href="/updates/">Updates</a> bookmarked for patch weeks.',
+				'For deeper category pages, read <a href="/isle-esp/">ESP</a>, <a href="/isle-aimbot/">aimbot</a>, and <a href="/undetected-isle-hacks/">undetected notes</a>. Questions before checkout go to <a href="/faq/">FAQ</a> and <a href="/support/">Support</a>.',
+			],
+		},
+	],
+	'the-isle-hacks-buyers-guide': [
+		{
+			h2: 'Final checklist before checkout',
+			paragraphs: [
+				'Confirm dated status, carcass ESP, radar, soft aim profiles, Windows support, and a written refund policy. If any item is missing, pause — cheap weekly subs add up when rebuilds are slow.',
+				'When the checklist passes, open <a href="/the-isle-hacks/">The Isle Hacks</a>, compare <a href="/pricing/">Pricing</a>, and read <a href="/blog/the-isle-hacks-complete-guide-2026/">the 2026 complete guide</a> for feature context.',
+			],
+		},
+	],
+	'isle-hacks-2026-whats-new': [
+		{
+			h2: 'What to watch for the rest of 2026',
+			paragraphs: [
+				'Expect more frequent client and anti-cheat touchpoints, not fewer. Shops that survive will keep publishing rebuild notes and tightening overlay readability.',
+				'Follow <a href="/updates/">Updates</a>, review <a href="/features/">Features</a> after each major push, and treat <a href="/undetected-isle-hacks/">undetected</a> as a maintenance process — not a permanent badge.',
+			],
+		},
+	],
+	'isle-aimbot-settings-guide': [
+		{
+			h2: 'Build a profile set you can trust in nests',
+			paragraphs: [
+				'Save carnivore, ambush, and long-range profiles separately. Test each on <a href="/blog/isle-warmup-maps-ranked/">warmup maps</a> before you take a grown dinosaur into high-traffic zones.',
+				'Combine tuned aim with <a href="/isle-esp/">ESP</a> and <a href="/isle-radar-hack/">radar</a> so you only assist fights you chose on purpose. After patches, confirm <a href="/updates/">Updates</a> before you tweak FOV on an old build.',
+			],
+		},
+	],
+	'isle-esp-wallhack-explained': [
+		{
+			h2: 'ESP in real The Isle sessions — practical takeaways',
+			paragraphs: [
+				'Use player ESP when rotating, carcass ESP when routing, and nest cues when holding water or cliffs. Switch profiles instead of leaving every box on — clutter kills reaction time.',
+				'For the maintained stack behind this guide, see <a href="/the-isle-hacks/">The Isle Hacks</a>, <a href="/isle-radar-hack/">radar</a>, and <a href="/pricing/">Pricing</a>. Patch-day rules live on <a href="/updates/">Updates</a>.',
+			],
+		},
+	],
+	'undetected-isle-hacks-eac': [
+		{
+			h2: 'Responsible undetected habits for The Isle',
+			paragraphs: [
+				'Undetected means maintained today — not immune forever. Read public notes, wait for rebuilds, and avoid rage settings that draw reports even on clean builds.',
+				'Use <a href="/updates/">Updates</a>, <a href="/eac-bypass/">EAC maintenance</a>, and <a href="/setup/">Setup</a> as your patch-week routine. Compare the full stack on <a href="/the-isle-hacks/">The Isle Hacks</a> when you are ready to buy.',
+			],
+		},
+	],
+	'the-isle-hacks-vs-cheatvault': [
+		{
+			h2: 'Side-by-side before you choose a shop',
+			paragraphs: [
+				'Open each seller’s status page, feature list, and support channel on the same screen. If one shop hides status in private Discord only, weigh that against a lower sticker price.',
+				'When the checklist favors a full stack, compare <a href="/features/">Features</a> and <a href="/pricing/">Pricing</a> here, then read <a href="/blog/the-isle-hacks-buyers-guide/">the buyers guide</a> before checkout.',
+			],
+		},
+	],
+	'elitefn-two-week-test': [
+		{
+			h2: 'How to run your own fair comparison',
+			paragraphs: [
+				'Match the same PC, servers, and session length for each tool. Track patch downtime hours, not just first-night impressions — that is usually where budget shops lose.',
+				'If you switch, follow <a href="/setup/">Setup</a>, bookmark <a href="/updates/">Updates</a>, and tune <a href="/isle-aimbot/">aim profiles</a> before you judge the full stack.',
+			],
+		},
+	],
+	'the-isle-hacks-vs-ghostware': [
+		{
+			h2: 'Pick the stack that matches how you play',
+			paragraphs: [
+				'Casual outline-only players may tolerate minimal ESP. Players who rotate, carcass, and hold nests usually need radar and filters in one menu — that is the full-stack case for <a href="/the-isle-hacks/">The Isle Hacks</a>.',
+				'Compare <a href="/isle-esp/">ESP</a>, <a href="/isle-radar-hack/">radar</a>, and <a href="/pricing/">Pricing</a> on paper first. Then read <a href="/undetected-isle-hacks/">undetected notes</a> on whichever path you choose.',
+			],
+		},
+	],
+};
+
+function finalizePost(src) {
+	const meta = POST_META[src.id] ?? {};
+	const extras = EXTRA_SECTIONS[src.id] ?? [];
+	return {
+		...src,
+		h1: meta.h1 ?? src.h1,
+		keywords: normalizeKeywords(meta.keywords ?? src.keywords),
+		sections: [...src.sections, ...extras],
+		updated: '2026-08-17',
+	};
+}
+
 function translationBlock(src) {
 	const sections = src.sections
 		.map(
@@ -877,7 +1132,7 @@ const file = `/* Auto-generated by scripts/generate-blog-posts.mjs — do not ed
 import type { BlogPostDefinition } from './types';
 
 export const blogPosts: BlogPostDefinition[] = [
-${sources.map(buildPost).join(',\n')}
+${sources.map(finalizePost).map(buildPost).join(',\n')}
 ];
 `;
 

@@ -27,6 +27,7 @@ interface Props {
 	pageId?: PageId;
 	hreflangAlternates?: HreflangAlternate[];
 	extraGraph?: Record<string, unknown>[];
+	keywords?: string[];
 	lcpImage?: string;
 	lcpImageSrcSet?: string;
 	lcpImageSizes?: string;
@@ -45,6 +46,7 @@ const {
 	pageId,
 	hreflangAlternates,
 	extraGraph = [],
+	keywords,
 	lcpImage,
 	lcpImageSrcSet,
 	lcpImageSizes = '100vw',
@@ -187,6 +189,9 @@ if (aboutNode) {
 		<meta name="robots" content={robots} />
 		<meta name="googlebot" content={robots} />
 		<meta name="description" content={description} />
+		{keywords && keywords.length > 0 && (
+			<meta name="keywords" content={keywords.join(', ')} />
+		)}
 		<meta name="author" content={siteConfig.name} />
 		<link rel="canonical" href={canonicalURL} />
 		{
