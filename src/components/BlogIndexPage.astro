@@ -17,6 +17,7 @@ import { getLocalizedPath } from '../data/i18n/routing';
 import { blogIndexTopicLinks } from '../data/internal-links';
 import RelatedPages from './RelatedPages.astro';
 import CategoryRow from './CategoryRow.astro';
+import ExternalResources from './ExternalResources.astro';
 import { getT } from '../i18n/server';
 
 interface Props {
@@ -134,6 +135,7 @@ const articleListSchema = {
 		</section>
 
 		<RelatedPages locale={locale} variant="topics" links={blogIndexTopicLinks} class="blog__topics" />
+		<ExternalResources locale={locale} class="blog__external" />
 		</div>
 	</main>
 	<SiteFooter locale={locale} />

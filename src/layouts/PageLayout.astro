@@ -19,6 +19,7 @@ import { siteConfig } from '../data/site';
 import { getT } from '../i18n/server';
 import RelatedPages from '../components/RelatedPages.astro';
 import CategoryRow from '../components/CategoryRow.astro';
+import ExternalResources from '../components/ExternalResources.astro';
 
 type GalleryInput = string | { src: string; alt: string };
 
@@ -38,6 +39,7 @@ interface Props {
 	introEdit?: string;
 	showGallery?: boolean;
 	showRelatedPages?: boolean;
+	showExternalResources?: boolean;
 	showCategoryRow?: boolean;
 	locale?: import('../data/i18n/locales').LocaleCode;
 	pageId?: import('../data/i18n/content.generated').PageId;
@@ -60,6 +62,7 @@ const {
 	introEdit,
 	showGallery = true,
 	showRelatedPages = true,
+	showExternalResources = true,
 	showCategoryRow = true,
 	locale = defaultLocale,
 	pageId: pageIdProp,
@@ -198,6 +201,7 @@ const useHomeHero =
 				{showRelatedPages && pageId && (
 					<RelatedPages locale={locale} pageId={pageId} />
 				)}
+				{showExternalResources && <ExternalResources locale={locale} />}
 			</article>
 
 			{

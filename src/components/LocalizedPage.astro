@@ -110,6 +110,7 @@ const eyebrowByPage: Partial<Record<PageId, string>> = {
 	locale={locale}
 	pageId={pageId}
 	extraGraph={extraGraph}
+	showExternalResources={!['privacy', 'refund', 'terms'].includes(pageId)}
 	ctaPrimary={{ href: siteConfig.checkoutUrl, label: ctaPrimaryLabel, edit: 'ctaBuy' }}
 	ctaSecondary={
 		ctaSecondaryLabel

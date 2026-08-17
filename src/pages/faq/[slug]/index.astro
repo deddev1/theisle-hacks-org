@@ -7,6 +7,7 @@ import { absoluteFaqUrl, faqBasePath, getFaqCrawlImage, getFaqPath, getRelatedFa
 import { getSelfHreflangAlternates } from '../../../data/i18n/routing';
 import { contentSrcSet, productMainSizes } from '../../../lib/responsive-images';
 import RelatedPages from '../../../components/RelatedPages.astro';
+import ExternalResources from '../../../components/ExternalResources.astro';
 
 export function getStaticPaths() {
 	return seoFaqs.map((faq) => ({
@@ -126,6 +127,7 @@ const extraGraph: Record<string, unknown>[] = [
 			</section>
 
 			<RelatedPages locale="en" pageId="faq" variant="topics" class="faq-detail__topics" />
+			<ExternalResources locale="en" class="faq-detail__external" />
 			</div>
 		</div>
 	</main>
